@@ -54,7 +54,7 @@ contract TradingTournamentScript is Script {
             block.timestamp + 200, // endTime (dans 2 heures)
             usdd
         );
-
+Z
         vm.stopBroadcast();
     }
 
