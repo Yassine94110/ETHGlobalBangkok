@@ -1,61 +1,31 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
+// Importer Script et console de forge-std
 import {Script, console} from "forge-std/Script.sol";
+// Importer les contrats TradingTournament et USDidy
 import {TradingTournament} from "../src/TradingTournament.sol";
-import {USDidy} from "../src/USDidy.sol";
+// Importer l'interface IERC20
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract TradingTournamentScript is Script {
     TradingTournament public tradingTournament;
-    USDidy public usdd;
 
-    function setUp() public {}
-
-    function run() public {
-        vm.startBroadcast();
-        tradingTournament = new TradingTournament();
-        usdd = new USDidy(100000);
-
-        // Ajouter les stablecoins autorisés
-        tradingTournament.addStablecoin(usdd);
-        tradingTournament.addStablecoin(usdd);
-
-        // Création des tournois
-        tradingTournament.createTournament(
-            "Enzo cup #1",
-            100*(10**18), // entryFee
-            111*(10**18), // maxBudget
-            10, // maxPlayer
-            block.timestamp + 30, // startTime (dans 1 minute)
-            block.timestamp + 4 days, // endTime (dans 1 heure)
-            usdd
-        );
-
-        tradingTournament.createTournament(
-            "Enzo cup #2",
-            200*(10**18), // entryFee
-            222*(10**18), // maxBudget
-            2, // maxPlayer
-            block.timestamp + 5 hours, // startTime (dans 2 minutes)
-            block.timestamp + 3 days, // endTime (dans 2 heures)
-            usdd
-        );
-        tradingTournament.createTournament(
-            "Enzo cup #3",
-            300*(10**18), // entryFee
-            333*(10**18), // maxBudget
-            3, // maxPlayer
-            block.timestamp + 1 days, // startTime (dans 2 minutes)
-            block.timestamp + 2 days, // endTime (dans 2 heures)
-            usdd
-        );
-
-        vm.stopBroadcast();
+    function setUp() public {
+        // Initialisation si nécessaire
     }
 
+    function run() public {
+        // Commencer la diffusion des transactions
+        vm.startBroadcast();
 
+        // Déployer le contrat TradingTournament
+        tradingTournament = new TradingTournament();
 
+        // Ajouter un stablecoin autorisé (cast explicite en IERC20)
+        tradingTournament.addStablecoin(IERC20(0xAbEf72c17D6696Fc7Fdb822aE5782678613d7aAb));
 
-
- 
+        // Arrêter la diffusion des transactions
+        vm.stopBroadcast();
+    }
 }
