@@ -6,6 +6,7 @@ import { ArrowUpDown, ChevronDown } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useEthersSigner } from "@/wallet";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,7 +20,8 @@ import { sepolia } from "viem/chains";
 import { erc20Abi } from "viem";
 import { useWriteContract } from "wagmi";
 
-import { UnsignedOrder,OrderSigningUtils } from '@cowprotocol/cow-sdk';
+import { UnsignedOrder, OrderSigningUtils } from "@cowprotocol/cow-sdk";
+import { ethers } from "ethers";
 
 // Setup Viem client
 const client = createPublicClient({
@@ -47,6 +49,7 @@ const Swap: React.FC = () => {
   const relayerAddress = "0xC92E8bdf79f0507f65a392b0ab4667716BFE0110"; // CoW Protocol Relayer
   const { address: userAddress } = useAccount();
   const { data: hash, writeContract: approve } = useWriteContract();
+  const signer = useEthersSigner();
 
   // Fetch token list from API
   useEffect(() => {
@@ -145,7 +148,9 @@ const Swap: React.FC = () => {
         body: JSON.stringify({
           sellToken,
           buyToken,
-          sellAmountBeforeFee: BigInt(parseFloat(fromAmount) * 10 ** 18).toString(),
+          sellAmountBeforeFee: BigInt(
+            parseFloat(fromAmount) * 10 ** 18
+          ).toString(),
           from: userAddress,
           kind: "sell",
         }),
@@ -166,7 +171,11 @@ const Swap: React.FC = () => {
         receiver: userAddress,
       };
 
-      const signedOrder = await OrderSigningUtils.signOrder(order, sepolia.id, userAddress);
+      const signedOrder = await OrderSigningUtils.signOrder(
+        order,
+        sepolia.id,
+        signer
+      );
       console.log("Signed Order:", signedOrder);
     } catch (error) {
       console.error("Error creating order:", error);
@@ -203,7 +212,7 @@ const Swap: React.FC = () => {
       }
 
       // Approve the relayer
-      console.log("o")
+      console.log("o");
 
       approve({
         address: sellToken,
@@ -211,7 +220,7 @@ const Swap: React.FC = () => {
         functionName: "approve",
         args: [relayerAddress, amountToApprove],
       });
-      console.log("oo")
+      console.log("oo");
     } catch (error) {
       console.error("Error during token approval:", error);
     }
