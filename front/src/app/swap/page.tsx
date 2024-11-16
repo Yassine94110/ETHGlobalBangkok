@@ -44,7 +44,7 @@ const Swap: React.FC = () => {
 
   const relayerAddress = "0xC92E8bdf79f0507f65a392b0ab4667716BFE0110"; // CoW Protocol Relayer
   const { address: userAddress } = useAccount();
-  const { data: hash, writeContract: swap } = useWriteContract();
+  const { data: hash, writeContract: approve } = useWriteContract();
 
   // Fetch token list from API
   useEffect(() => {
@@ -159,14 +159,12 @@ const Swap: React.FC = () => {
 
       // Approve the relayer
 
-      swap({
+      approve({
         address: sellToken,
         abi: erc20Abi,
         functionName: "approve",
         args: [relayerAddress, amountToApprove],
       });
-
-      console.log("click");
     } catch (error) {
       console.error("Error during token approval:", error);
     }
