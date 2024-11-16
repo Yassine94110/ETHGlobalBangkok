@@ -129,11 +129,11 @@ export const getTournamentDetailsById = async (
   tournament.players = tournament.players.map(
     (participant: any, index: number) => {
       participant.trades = tradeOfParticipant[index] || [];
-      // calculatePortfolio(
-      //   participant,
-      //   tournament.stablecoin,
-      //   tournament.maxBudget
-      // );
+      calculatePortfolio(
+        participant,
+        tournament.stablecoin,
+        tournament.maxBudget
+      );
 
       return participant;
     }
@@ -151,20 +151,28 @@ const fetchTradeOfParticipants = async (addresses: string[]): Promise<any> => {
       return tradeOfParticipant
         .map((p: any) => {
           p.creationDate = new Date(p.creationDate).getTime();
+
           // Vérifie les hooks dans les métadonnées et filtre si nécessaire
           const prehooks =
             p.fullAppData && JSON.parse(p.fullAppData).metadata?.hooks?.pre;
-          if (prehooks) {
-            for (const hook of prehooks) {
-              if (hook.target != "0x3cF76028f955E200Af292f78BF1048257463614A") {
-                return null;
-              }
-            }
-          } else {
+          console.log(prehooks);
+          console.log("o");
+
+          // Filtre les transactions où prehooks est indéfini
+          if (!prehooks) {
             return null;
           }
 
-          // Supprime les propriétés inutiles
+          // Vérifie si un objet appelé target est égal à l'adresse spécifiée
+          const target = prehooks.find(
+            (hook: any) =>
+              hook.target === "0x3cF76028f955E200Af292f78BF1048257463614A"
+          );
+          if (!target) {
+            return null;
+          }
+
+          // Suppression des propriétés inutiles
           delete p.owner;
           delete p.uid;
           delete p.availableBalance;
