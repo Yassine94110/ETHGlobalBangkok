@@ -23,7 +23,7 @@ contract TradingTournamentScript is Script {
         tradingTournament = new TradingTournament();
 
         // Ajouter un stablecoin autorisé (cast explicite en IERC20)
-        tradingTournament.addStablecoin(IERC20(0xAbEf72c17D6696Fc7Fdb822aE5782678613d7aAb));
+        tradingTournament.addStablecoin(IERC20(0xbe72E441BF55620febc26715db68d3494213D8Cb));
 
         // Arrêter la diffusion des transactions
         vm.stopBroadcast();

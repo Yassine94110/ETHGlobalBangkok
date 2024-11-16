@@ -4,7 +4,7 @@ import { formatUnits } from "viem";
 
 export const getTournaments = async (ids?: number[]): Promise<any> => {
   const allTournaments: any = await client.readContract({
-    address: "0xbeee3763d92ede4fb83d57e42231b085855d6e8a",
+    address: "0x70FD33c283bDA7402A3593276ef31962433AadA2",
     abi: abi,
     functionName: "getAllTournaments",
   });
