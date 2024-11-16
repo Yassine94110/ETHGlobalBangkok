@@ -13,7 +13,6 @@ contract TradingTournamentScript is Script {
 
     function run() public {
         vm.startBroadcast();
-        usdd = USDidy(0xbe72E441BF55620febc26715db68d3494213D8Cb);
         tradingTournament = new TradingTournament();
         usdd = new USDidy(100000);
 

@@ -1,3 +1,4 @@
 smart-contract/out/*
 */node_modules/*
 
+server/.env
