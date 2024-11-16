@@ -138,7 +138,7 @@ contract TradingTournament is AccessControl {
         uint _startTime,
         uint _endTime,
         IERC20 _stablecoin
-    ) public onlyRole(ADMIN_ROLE) {
+    ) public  {
         require(isStablecoinAllowed(_stablecoin), "Stablecoin not allowed");
         require(
             _startTime > block.timestamp,

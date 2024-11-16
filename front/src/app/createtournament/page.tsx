@@ -44,7 +44,7 @@ const CreateTournament = () => {
   const [error, setError] = useState<string | null>(null);
   const [, setLoading] = useState<boolean>(true);
 
-  const { writeContract: createTournament } =
+  const { data: hash, writeContract: createTournament } =
     useWriteTradingTournamentCreateTournament();
   const [stable, setStables] = useState<Token[]>([]);
 
@@ -132,21 +132,20 @@ const CreateTournament = () => {
       endTimestamp,
       token,
     });
-
+    // console.log all
     createTournament({
-      address: "0x70FD33c283bDA7402A3593276ef31962433AadA2",
+      address: "0x5fbdb2315678afecb367f032d93f642f64180aa3",
       args: [
         tournamentName,
-        BigInt(entryFee),
+        BigInt(Number(entryFee) * 10 ** 6),
         BigInt(maxPlayers),
-        BigInt(maxBudget),
+        BigInt(Number(maxBudget) * 10 ** 6),
         BigInt(startDate?.getTime() / 1000),
         BigInt(endDate?.getTime() / 1000),
         token,
       ],
     });
   };
-
   return (
     <div className="mx-auto max-w-2xl py-12 px-4 sm:px-6 lg:px-8">
       <div className="space-y-6">
