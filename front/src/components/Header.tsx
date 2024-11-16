@@ -1,6 +1,5 @@
 import React from 'react'
 import Link from 'next/link'
-import { MountainIcon } from "@/components/IconSVG"
 import Image from "next/image";
 import cowFace from "/public/cowFace.svg"
 
