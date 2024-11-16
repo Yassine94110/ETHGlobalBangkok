@@ -21,7 +21,7 @@ import { erc20Abi } from "viem";
 import { useWriteContract } from "wagmi";
 
 import { UnsignedOrder, OrderSigningUtils } from "@cowprotocol/cow-sdk";
-import { ethers } from "ethers";
+import { Web3Provider } from "@ethersproject/providers";
 
 // Setup Viem client
 const client = createPublicClient({
@@ -49,7 +49,12 @@ const Swap: React.FC = () => {
   const relayerAddress = "0xC92E8bdf79f0507f65a392b0ab4667716BFE0110"; // CoW Protocol Relayer
   const { address: userAddress } = useAccount();
   const { data: hash, writeContract: approve } = useWriteContract();
-  const signer = useEthersSigner();
+
+  const provider =
+    typeof window !== "undefined" && window.ethereum
+      ? new Web3Provider(window.ethereum)
+      : undefined;
+  const signer = provider ? provider.getSigner() : undefined;
 
   // Fetch token list from API
   useEffect(() => {
@@ -161,7 +166,10 @@ const Swap: React.FC = () => {
       }
 
       const quote = await response.json();
-      const sellAmount = BigInt(quote.sellAmount) + BigInt(quote.feeAmount);
+      console.log("quote", quote);
+
+      const sellAmount =
+        BigInt(quote.quote.sellAmount) + BigInt(quote.quote.feeAmount);
       const feeAmount = "0";
 
       const order: UnsignedOrder = {
@@ -170,6 +178,10 @@ const Swap: React.FC = () => {
         feeAmount,
         receiver: userAddress,
       };
+
+      if (signer == undefined) {
+        throw Error("no signer");
+      }
 
       const signedOrder = await OrderSigningUtils.signOrder(
         order,
@@ -208,19 +220,17 @@ const Swap: React.FC = () => {
 
       if (BigInt(allowance) >= amountToApprove) {
         console.log("Token already approved for the specified amount");
-        return;
+      } else {
+        approve({
+          address: sellToken,
+          abi: erc20Abi,
+          functionName: "approve",
+          args: [relayerAddress, amountToApprove],
+        });
       }
 
-      // Approve the relayer
-      console.log("o");
-
-      approve({
-        address: sellToken,
-        abi: erc20Abi,
-        functionName: "approve",
-        args: [relayerAddress, amountToApprove],
-      });
-      console.log("oo");
+      // wait all promises to resolve to launch    createOrder();
+      createOrder();
     } catch (error) {
       console.error("Error during token approval:", error);
     }
