@@ -13,9 +13,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAccount } from "wagmi";
+
 import { createPublicClient, http } from "viem";
 import { sepolia } from "viem/chains";
 import { erc20Abi } from "viem";
+import { useWriteContract } from 'wagmi'
+
 
 // Setup Viem client
 const client = createPublicClient({
@@ -42,6 +45,10 @@ const Swap: React.FC = () => {
 
   const relayerAddress = "0xC92E8bdf79f0507f65a392b0ab4667716BFE0110"; // CoW Protocol Relayer
   const { address: userAddress } = useAccount();
+  const { data: hash, writeContract } = useWriteContract()
+
+  
+
 
   // Fetch token list from API
   useEffect(() => {
@@ -147,16 +154,15 @@ const Swap: React.FC = () => {
       }
   
       // Approve the relayer
-      const { request } = await client.simulateContract({
+   
+      writeContract({
         address: sellToken,
         abi: erc20Abi,
         functionName: "approve",
         args: [relayerAddress, amountToApprove],
-        account: userAddress!,
-      });
-  
-      const txHash = await client.readContract(request);
-      console.log("Approval transaction sent:", txHash);
+      })
+
+     
     } catch (error) {
       console.error("Error during token approval:", error);
     }
