@@ -1,14 +1,23 @@
-'use client'
-import React, { useState, useEffect } from 'react';
+"use client";
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { FilterIcon, ListOrderedIcon, PlusIcon } from "@/components/IconSVG";
-import { Tournament } from '@/components/TournamentCard';
+import { Tournament } from "@/components/TournamentCard";
 
-import TournamentCard from '@/components/TournamentCard';
-import { fetchTournaments } from '@/lib/API'; // Assurez-vous que ce chemin pointe vers votre fonction API
-import Link from 'next/link';
+import TournamentCard from "@/components/TournamentCard";
+import { fetchTournaments } from "@/lib/API"; // Assurez-vous que ce chemin pointe vers votre fonction API
+import Link from "next/link";
 
 const Tournaments = () => {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
@@ -54,7 +63,9 @@ const Tournaments = () => {
             <DropdownMenuContent align="end" className="w-[200px]">
               <DropdownMenuLabel>Filter by</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuCheckboxItem checked>Active</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem checked>
+                Active
+              </DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem>Upcoming</DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem>Ended</DropdownMenuCheckboxItem>
             </DropdownMenuContent>
@@ -70,9 +81,15 @@ const Tournaments = () => {
               <DropdownMenuLabel>Sort by</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuRadioGroup value="prize">
-                <DropdownMenuRadioItem value="prize">Prize Pool</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="participants">Participants</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="start_date">Start Date</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="prize">
+                  Prize Pool
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="participants">
+                  Participants
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="start_date">
+                  Start Date
+                </DropdownMenuRadioItem>
               </DropdownMenuRadioGroup>
             </DropdownMenuContent>
           </DropdownMenu>
