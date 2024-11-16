@@ -5,7 +5,7 @@ import { getTournaments } from "./allTournaments";
 
 export const getTournamentByAddress = async (player: any): Promise<any> => {
   const tournamentByPlayer: any = await client.readContract({
-    address: "0x70FD33c283bDA7402A3593276ef31962433AadA2",
+    address: "0xdE73cABef5c539e21C30fdE81bBd4b52d256cF44",
     abi: abi,
     functionName: "getPlayerTournaments",
     args: [`${player}`],
