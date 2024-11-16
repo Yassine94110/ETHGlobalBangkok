@@ -17,8 +17,7 @@ import { useAccount } from "wagmi";
 import { createPublicClient, http } from "viem";
 import { sepolia } from "viem/chains";
 import { erc20Abi } from "viem";
-import { useWriteContract } from 'wagmi'
-
+import { useWriteContract } from "wagmi";
 
 // Setup Viem client
 const client = createPublicClient({
@@ -45,10 +44,7 @@ const Swap: React.FC = () => {
 
   const relayerAddress = "0xC92E8bdf79f0507f65a392b0ab4667716BFE0110"; // CoW Protocol Relayer
   const { address: userAddress } = useAccount();
-  const { data: hash, writeContract } = useWriteContract()
-
-  
-
+  const { data: hash, writeContract: swap } = useWriteContract();
 
   // Fetch token list from API
   useEffect(() => {
@@ -72,7 +68,12 @@ const Swap: React.FC = () => {
   // Fetch quote dynamically when sell token, buy token, or amount changes
   useEffect(() => {
     const fetchQuote = async () => {
-      if (!sellToken || !buyToken || !fromAmount || parseFloat(fromAmount) <= 0) {
+      if (
+        !sellToken ||
+        !buyToken ||
+        !fromAmount ||
+        parseFloat(fromAmount) <= 0
+      ) {
         setToAmount("0");
         return;
       }
@@ -84,7 +85,9 @@ const Swap: React.FC = () => {
         const payload = {
           sellToken,
           buyToken,
-          sellAmountBeforeFee: BigInt(parseFloat(fromAmount) * 10 ** 18).toString(),
+          sellAmountBeforeFee: BigInt(
+            parseFloat(fromAmount) * 10 ** 18
+          ).toString(),
           from: userAddress || "0x0000000000000000000000000000000000000000", // Use a default address if not connected
           kind: "sell",
         };
@@ -108,7 +111,8 @@ const Swap: React.FC = () => {
         const buyAmountRaw = BigInt(data.quote.buyAmount);
 
         // Convert to human-readable format (as a float, avoiding integer division issues)
-        const buyAmount = parseFloat((buyAmountRaw / BigInt(10 ** 14)).toString()) / 10 ** 4;
+        const buyAmount =
+          parseFloat((buyAmountRaw / BigInt(10 ** 14)).toString()) / 10 ** 4;
 
         console.log("Converted Buy Amount:", buyAmount);
         setToAmount(buyAmount.toString());
@@ -129,17 +133,17 @@ const Swap: React.FC = () => {
       console.error("Wallet not connected");
       return;
     }
-  
+
     try {
       // Convert fromAmount to BigInt
       const parsedFromAmount = parseFloat(fromAmount);
       if (isNaN(parsedFromAmount) || parsedFromAmount <= 0) {
         throw new Error("Invalid fromAmount");
       }
-  
+
       // Convert to Wei (integer representation)
       const amountToApprove = BigInt(Math.round(parsedFromAmount * 10 ** 18));
-  
+
       // Check current allowance
       const allowance = await client.readContract({
         address: sellToken,
@@ -147,22 +151,22 @@ const Swap: React.FC = () => {
         functionName: "allowance",
         args: [userAddress, relayerAddress],
       });
-  
+
       if (BigInt(allowance) >= amountToApprove) {
         console.log("Token already approved for the specified amount");
         return;
       }
-  
+
       // Approve the relayer
-   
-      writeContract({
+
+      swap({
         address: sellToken,
         abi: erc20Abi,
         functionName: "approve",
         args: [relayerAddress, amountToApprove],
-      })
+      });
 
-     
+      console.log("click");
     } catch (error) {
       console.error("Error during token approval:", error);
     }
@@ -201,7 +205,11 @@ const Swap: React.FC = () => {
                     {tokens.map((token) => (
                       <DropdownMenuItem
                         key={token.address}
-                        onClick={() => setSellToken(`0x${token.address.slice(2)}` as `0x${string}`)}
+                        onClick={() =>
+                          setSellToken(
+                            `0x${token.address.slice(2)}` as `0x${string}`
+                          )
+                        }
                       >
                         {token.symbol}
                       </DropdownMenuItem>
@@ -260,7 +268,11 @@ const Swap: React.FC = () => {
                     {tokens.map((token) => (
                       <DropdownMenuItem
                         key={token.address}
-                        onClick={() => setBuyToken(`0x${token.address.slice(2)}` as `0x${string}`)}
+                        onClick={() =>
+                          setBuyToken(
+                            `0x${token.address.slice(2)}` as `0x${string}`
+                          )
+                        }
                       >
                         {token.symbol}
                       </DropdownMenuItem>
