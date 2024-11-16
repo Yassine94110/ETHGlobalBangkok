@@ -134,7 +134,7 @@ const CreateTournament = () => {
     });
 
     createTournament({
-      address: "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+      address: "0x612C46712a6411d16A34BE988c6865124C4169c1",
       args: [
         tournamentName,
         BigInt(entryFee),

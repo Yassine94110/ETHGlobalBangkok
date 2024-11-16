@@ -27,7 +27,7 @@ contract TradingTournamentScript is Script {
             111*(10**18), // maxBudget
             10, // maxPlayer
             block.timestamp + 30, // startTime (dans 1 minute)
-            block.timestamp + 5000, // endTime (dans 1 heure)
+            block.timestamp + 4 days, // endTime (dans 1 heure)
             usdd
         );
 
@@ -36,8 +36,8 @@ contract TradingTournamentScript is Script {
             200*(10**18), // entryFee
             222*(10**18), // maxBudget
             2, // maxPlayer
-            block.timestamp + 40, // startTime (dans 2 minutes)
-            block.timestamp + 2000, // endTime (dans 2 heures)
+            block.timestamp + 5 hours, // startTime (dans 2 minutes)
+            block.timestamp + 3 days, // endTime (dans 2 heures)
             usdd
         );
         tradingTournament.createTournament(
@@ -45,8 +45,8 @@ contract TradingTournamentScript is Script {
             300*(10**18), // entryFee
             333*(10**18), // maxBudget
             3, // maxPlayer
-            block.timestamp + 40, // startTime (dans 2 minutes)
-            block.timestamp + 200, // endTime (dans 2 heures)
+            block.timestamp + 1 days, // startTime (dans 2 minutes)
+            block.timestamp + 2 days, // endTime (dans 2 heures)
             usdd
         );
 

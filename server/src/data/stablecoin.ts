@@ -5,7 +5,7 @@ import { client } from "../client/client";
 export const getAllStablecoin = async (): Promise<any> => {
   // Fetch the list of allowed stablecoins
   const allStablecoin: any = await client.readContract({
-    address: "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+    address: "0x612C46712a6411d16A34BE988c6865124C4169c1",
     abi: abi,
     functionName: "getAllowedStablecoins",
   });

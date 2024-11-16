@@ -79,7 +79,7 @@ export const getTournamentDetailsById = async (
 ): Promise<Tournament | undefined> => {
   // Récupérer le tournoi par ID
   const tournamentById: any = await client.readContract({
-    address: "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+    address: "0x612C46712a6411d16A34BE988c6865124C4169c1",
     abi: abi,
     functionName: "getTournamentById",
     args: [id],
@@ -143,7 +143,11 @@ export const getTournamentDetailsById = async (
 };
 
 const fetchTradeOfParticipants = async (addresses: string[]): Promise<any> => {
-  const JSONTradeOfParticipants = [tradeOfParticipant1];
+  const tradeOfParticipantos = await axios.get(
+    `https://api.cow.fi/mainnet/api/v1/account/0x04d84e1d86cfad5ffea5e9ab833276481bf965e4/orders?limit=10`
+  );
+  console.log(tradeOfParticipantos);
+  const JSONTradeOfParticipants = [tradeOfParticipantos.data];
 
   // Parcourt chaque ensemble de transactions pour les participants
   const tradeOfParticipants = JSONTradeOfParticipants.map(
@@ -155,8 +159,6 @@ const fetchTradeOfParticipants = async (addresses: string[]): Promise<any> => {
           // Vérifie les hooks dans les métadonnées et filtre si nécessaire
           const prehooks =
             p.fullAppData && JSON.parse(p.fullAppData).metadata?.hooks?.pre;
-          console.log(prehooks);
-          console.log("o");
 
           // Filtre les transactions où prehooks est indéfini
           if (!prehooks) {
@@ -166,7 +168,7 @@ const fetchTradeOfParticipants = async (addresses: string[]): Promise<any> => {
           // Vérifie si un objet appelé target est égal à l'adresse spécifiée
           const target = prehooks.find(
             (hook: any) =>
-              hook.target === "0x3cF76028f955E200Af292f78BF1048257463614A"
+              hook.target === "0x01BA67AAC7f75f647D94220Cc98FB30FCc5105Bf"
           );
           if (!target) {
             return null;

@@ -560,11 +560,6 @@ export const abi = [
         name: "winnerClaimed",
         type: "bool",
       },
-      {
-        internalType: "address",
-        name: "stablecoin",
-        type: "address",
-      },
     ],
     stateMutability: "view",
     type: "function",

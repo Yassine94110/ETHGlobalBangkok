@@ -7,6 +7,6 @@ dotenv.config();
 const ALCHEMY_SEPOLIA = process.env.ALCHEMY_SEPOLIA;
 
 export const client = createPublicClient({
-  chain: localhost,
-  transport: http(),
+  chain: sepolia,
+  transport: http(ALCHEMY_SEPOLIA),
 });
