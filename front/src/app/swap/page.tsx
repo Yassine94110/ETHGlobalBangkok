@@ -19,6 +19,8 @@ import { sepolia } from "viem/chains";
 import { erc20Abi } from "viem";
 import { useWriteContract } from "wagmi";
 
+import { UnsignedOrder,OrderSigningUtils } from '@cowprotocol/cow-sdk';
+
 // Setup Viem client
 const client = createPublicClient({
   chain: sepolia,
@@ -128,6 +130,49 @@ const Swap: React.FC = () => {
     fetchQuote();
   }, [sellToken, buyToken, fromAmount, userAddress]);
 
+  const createOrder = async () => {
+    if (!userAddress) {
+      console.error("Wallet not connected");
+      return;
+    }
+
+    try {
+      const response = await fetch(quoteApiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sellToken,
+          buyToken,
+          sellAmountBeforeFee: BigInt(parseFloat(fromAmount) * 10 ** 18).toString(),
+          from: userAddress,
+          kind: "sell",
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch quote");
+      }
+
+      const quote = await response.json();
+      const sellAmount = BigInt(quote.sellAmount) + BigInt(quote.feeAmount);
+      const feeAmount = "0";
+
+      const order: UnsignedOrder = {
+        ...quote,
+        sellAmount: sellAmount.toString(),
+        feeAmount,
+        receiver: userAddress,
+      };
+
+      const signedOrder = await OrderSigningUtils.signOrder(order, sepolia.id, userAddress);
+      console.log("Signed Order:", signedOrder);
+    } catch (error) {
+      console.error("Error creating order:", error);
+    }
+  };
+
   const handleApproveToken = async () => {
     if (!userAddress) {
       console.error("Wallet not connected");
@@ -158,6 +203,7 @@ const Swap: React.FC = () => {
       }
 
       // Approve the relayer
+      console.log("o")
 
       approve({
         address: sellToken,
@@ -165,6 +211,7 @@ const Swap: React.FC = () => {
         functionName: "approve",
         args: [relayerAddress, amountToApprove],
       });
+      console.log("oo")
     } catch (error) {
       console.error("Error during token approval:", error);
     }
