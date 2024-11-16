@@ -11,7 +11,7 @@ const Header = () => {
         </Link>
         <nav className="ml-auto flex items-center gap-4 md:gap-6">
           <Link href="/createTournament" className="font-medium hover:underline" prefetch={false}>
-            📝 Create Tournament
+            Create Tournament
           </Link>
           <Link href="/tournaments" className="font-medium hover:underline" prefetch={false}>
             Tournaments
