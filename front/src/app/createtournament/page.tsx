@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "@/components/IconSVG";
-import { add, format } from "date-fns";
+import { format } from "date-fns";
 
 import { useWriteTradingTournamentCreateTournament } from "@/generated";
 import { fetchStable } from "@/lib/API";
@@ -42,9 +42,9 @@ const CreateTournament = () => {
   const [endTime, setEndTime] = useState("");
   const [token, setToken] = useState<Address>("0x");
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [, setLoading] = useState<boolean>(true);
 
-  const { data: hash, writeContract: createTournament } =
+  const { writeContract: createTournament } =
     useWriteTradingTournamentCreateTournament();
   const [stable, setStables] = useState<Token[]>([]);
 
@@ -54,7 +54,7 @@ const CreateTournament = () => {
         setLoading(true);
         const stableArray = await fetchStable();
         setStables(stableArray);
-      } catch (err: any) {
+      } catch (err) {
         setError("Une erreur s'est produite lors du chargement des stables.");
         console.error(err);
       } finally {
@@ -65,7 +65,7 @@ const CreateTournament = () => {
     loadTournaments();
   }, []);
 
-  const handleClick = (e: any) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     // Conversion des dates en timestamp en secondes
@@ -134,7 +134,7 @@ const CreateTournament = () => {
     });
 
     createTournament({
-      address: "0x612C46712a6411d16A34BE988c6865124C4169c1",
+      address: "0x70FD33c283bDA7402A3593276ef31962433AadA2",
       args: [
         tournamentName,
         BigInt(entryFee),
@@ -288,8 +288,11 @@ const CreateTournament = () => {
                 <SelectValue placeholder="Select token" />
               </SelectTrigger>
               <SelectContent>
-                {stable.map((token) => (
-                  <SelectItem key={token.address} value={token.address}>
+                {stable.map((token, index) => (
+                  <SelectItem
+                    key={`${token.address}-${index}`}
+                    value={token.address}
+                  >
                     {token.symbol}
                   </SelectItem>
                 ))}
