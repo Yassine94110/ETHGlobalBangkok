@@ -79,11 +79,15 @@ export const getTournamentDetailsById = async (
 ): Promise<Tournament | undefined> => {
   // Récupérer le tournoi par ID
   const tournamentById: any = await client.readContract({
-    address: "0x3284E1a61426b8EF80E7edf7fbf48a3ceE66AA51",
+    address: "0x70369485D91c875436dC6237443B8D824f755409",
     abi: abi,
     functionName: "getTournamentById",
     args: [id],
   });
+
+  if (!tournamentById) {
+    return undefined; // Tournoi non trouvé
+  }
 
   const tournamentData = tournamentById as [
     number,
