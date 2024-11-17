@@ -1,66 +1,137 @@
-## Foundry
+# 🐮 The coWncil - Trading Tournament Platform 🏆
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+The coWncil is a fully on-chain trading tournament platform powered by CowSwap. Compete with friends or other traders, track your trades, and aim to be crowned the best trader!
 
-Foundry consists of:
+---
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## 🚀 Features
 
-## Documentation
+- **Fully On-Chain:** Transparent and secure tournaments managed with Solidity smart contracts deployed on Sepolia.
+- **Customizable Tournaments:** Set entry fees, prize pools, max players, budgets, and more.
+- **Integrated Swap Interface:** All trades are tracked through our CowSwap-powered swap interface for accurate profit/loss calculations.
+- **User Profiles:** View tournaments you've created or joined, with detailed stats and rankings.
+- **Frontend Tech Stack:** Built with Next.js 15, Tailwind CSS, and ShadCN for a modern and responsive UI.
+- **Backend Tech Stack:** Node.js with custom APIs to fetch data on-chain or from CowSwap's API.
+- **Blockchain Tools:** Viem, Wagmi, and Ethers.js for seamless blockchain interaction.
 
-https://book.getfoundry.sh/
+---
 
-## Usage
+## 🛠️ Prerequisites
 
-### Build
+Before you start, ensure you have the following installed:
 
-```shell
-$ forge build
+- **Node.js** (v16 or later)
+- **Yarn** (for frontend dependencies)
+- **Reown** account and project ID for wallet connection.
+
+---
+
+## 📂 Project Structure
+
+```
+The-coWncil/
+├── front/       # Frontend (Next.js)
+├── server/      # Backend (Node.js + APIs)
+├── README.md    # You're here!
 ```
 
-### Test
+---
 
-```shell
-$ forge test
+## 🧑‍💻 Getting Started
+
+### 1️⃣ Clone the repository
+
+```bash
+git clone https://github.com/your-repo/the-cowncil.git
+cd the-cowncil
 ```
 
-### Format
+### 2️⃣ Set up `.env.local`
 
-```shell
-$ forge fmt
+Navigate to the `front` folder and create a `.env.local` file:
+
+```bash
+cd front
+touch .env.local
 ```
 
-### Gas Snapshots
+Add your **Reown Project ID** to the `.env.local` file:
 
-```shell
-$ forge snapshot
+```
+NEXT_PUBLIC_PROJECT_ID="xxxxx"
 ```
 
-### Anvil
+### 3️⃣ Install dependencies
 
-```shell
-$ anvil
+Install all necessary packages for both the frontend and backend:
+
+#### Frontend
+
+```bash
+cd front
+yarn install
 ```
 
-### Deploy
+#### Backend
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+```bash
+cd ../server
+npm install
 ```
 
-### Cast
+---
 
-```shell
-$ cast <subcommand>
+## 🚦 Running the Project
+
+### 🖥️ Start the Frontend
+
+Navigate to the `front` folder and start the development server:
+
+```bash
+cd front
+yarn dev
 ```
 
-### Help
+The frontend should now be running at [http://localhost:3000](http://localhost:3000). 🌐
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+### ⚙️ Start the Backend
+
+Navigate to the `server` folder and start the server using **nodemon**:
+
+```bash
+cd ../server
+npx nodemon
 ```
+
+The backend server should now be running at [http://localhost:3005](http://localhost:3005). 🚀
+
+---
+
+## 🛠️ Technologies Used
+
+- **Frontend:**
+  - Next.js 15
+  - Tailwind CSS
+  - ShadCN
+  - Reown for wallet integration
+- **Backend:**
+  - Node.js
+  - CowSwap API
+  - Custom on-chain/off-chain data handling
+- **Blockchain:**
+  - Solidity smart contracts on Sepolia
+  - Viem, Wagmi, and Ethers.js for blockchain interaction
+
+---
+
+## 🐞 Troubleshooting
+
+- If the frontend fails to connect to the backend, ensure both servers are running and accessible.
+- Check `.env.local` to verify the Reown Project ID is correctly configured.
+- For backend API issues, ensure you’re running the server in the `server` directory.
+
+---
+
+## 🐄 Join the coWncil Community
+
+Start competing, track your trades, and prove you’re the ultimate trader. Ready to take on the challenge? 🚀
