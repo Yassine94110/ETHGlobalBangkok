@@ -541,9 +541,21 @@ export const abi = [
         type: "uint256",
       },
       {
-        internalType: "address[]",
+        components: [
+          {
+            internalType: "address",
+            name: "player",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "tradeCount",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct TradingTournament.Player[]",
         name: "players",
-        type: "address[]",
+        type: "tuple[]",
       },
       {
         internalType: "address",
@@ -559,6 +571,11 @@ export const abi = [
         internalType: "bool",
         name: "winnerClaimed",
         type: "bool",
+      },
+      {
+        internalType: "address",
+        name: "stablecoin",
+        type: "address",
       },
     ],
     stateMutability: "view",
@@ -764,6 +781,11 @@ export const abi = [
         internalType: "uint256",
         name: "_tournamentId",
         type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "_player",
+        type: "address",
       },
     ],
     name: "trackingSwap",

@@ -119,6 +119,7 @@ export const getTournamentDetailsById = async (
     return undefined; // Tournoi non trouvé
   }
   const tournament = tournamentJson;
+  console.log(tournamentJson);
 
   // Récupérer les participants à partir des fichiers JSON
   const tradeOfParticipant = await fetchTradeOfParticipants(
@@ -143,11 +144,14 @@ export const getTournamentDetailsById = async (
 };
 
 const fetchTradeOfParticipants = async (addresses: string[]): Promise<any> => {
-  const tradeOfParticipantos = await axios.get(
-    `https://api.cow.fi/mainnet/api/v1/account/0x04d84e1d86cfad5ffea5e9ab833276481bf965e4/orders?limit=10`
+  const JSONTradeOfParticipants = await Promise.all(
+    addresses.map(async (address) => {
+      const response = await axios.get(
+        `https://api.cow.fi/sepolia/api/v1/account/${address}/orders?limit=10`
+      );
+      return response.data;
+    })
   );
-  console.log(tradeOfParticipantos);
-  const JSONTradeOfParticipants = [tradeOfParticipantos.data];
 
   // Parcourt chaque ensemble de transactions pour les participants
   const tradeOfParticipants = JSONTradeOfParticipants.map(

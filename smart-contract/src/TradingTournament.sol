@@ -31,6 +31,7 @@ contract TradingTournament is AccessControl {
         IERC20 stablecoin;
         uint prizePool;
         bool winnerClaimed;
+
     }
 
     mapping(uint => Tournament) private _tournaments;
@@ -76,20 +77,21 @@ contract TradingTournament is AccessControl {
             uint maxPlayer,
             uint startTime,
             uint endTime,
-            address[] memory players,
+            Player[] memory players,
             address winner,
             uint prizePool,
-            bool winnerClaimed
+            bool winnerClaimed,
+            address stablecoin
         )
     {
         Tournament storage tournament = _tournaments[_tournamentId];
 
-        address[] memory playerAddresses = new address[](
+        Player[] memory playerList = new Player[](
             tournament.players.length
         );
 
         for (uint i = 0; i < tournament.players.length; i++) {
-            playerAddresses[i] = tournament.players[i].player;
+            playerList[i] = tournament.players[i];
         }
 
         return (
@@ -100,10 +102,11 @@ contract TradingTournament is AccessControl {
             tournament.maxPlayer,
             tournament.startTime,
             tournament.endTime,
-            playerAddresses,
+            playerList,
             tournament.winner,
             tournament.prizePool,
-            tournament.winnerClaimed
+            tournament.winnerClaimed,
+            stablecoin
         );
     }
 
@@ -197,22 +200,22 @@ contract TradingTournament is AccessControl {
     }
 
     function trackingSwap(
-        uint _tournamentId
-    ) public onlyRole(GPv2Settlement_ROLE) {
+        uint _tournamentId, address _player
+    ) public  {
         Tournament storage tournament = _tournaments[_tournamentId];
         for (uint i = 0; i < tournament.players.length; i++) {
-            if (tournament.players[i].player == msg.sender) {
+            if (tournament.players[i].player == _player) {
                 tournament.players[i].tradeCount++;
                 return;
             }
         }
-        revert("You are not a player in this tournament");
+        revert("Player is not in the tournament");
     }
 
     function declareWinner(
         uint _tournamentId,
         address _winner
-    ) public onlyRole(ADMIN_ROLE) {
+    ) public  {
         Tournament storage tournament = _tournaments[_tournamentId];
         require(
             block.timestamp > tournament.endTime,
