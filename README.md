@@ -32,6 +32,7 @@ Before you start, ensure you have the following installed:
 The-coWncil/
 ├── front/       # Frontend (Next.js)
 ├── server/      # Backend (Node.js + APIs)
+├── smart-contract/
 ├── README.md    # You're here!
 ```
 
