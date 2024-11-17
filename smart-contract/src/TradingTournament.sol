@@ -81,7 +81,7 @@ contract TradingTournament is AccessControl {
             address winner,
             uint prizePool,
             bool winnerClaimed,
-            address stablecoin
+            IERC20 stablecoin
         )
     {
         Tournament storage tournament = _tournaments[_tournamentId];
@@ -106,7 +106,7 @@ contract TradingTournament is AccessControl {
             tournament.winner,
             tournament.prizePool,
             tournament.winnerClaimed,
-            stablecoin
+            tournament.stablecoin
         );
     }
 
