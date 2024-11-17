@@ -4,7 +4,7 @@
       "hash": "0xce4bd1117f7b5d4d2315bc7d77cddd6144e0bfe6e90b0aea50d1b4b99563e771",
       "transactionType": "CREATE",
       "contractName": "TradingTournament",
-      "contractAddress": "0x9DDaf5F1750a310d1a4EACc23A918C8fb3fFDA79",
+      "contractAddress": "0x3284E1a61426b8EF80E7edf7fbf48a3ceE66AA51",
       "function": null,
       "arguments": null,
       "transaction": {
@@ -22,12 +22,12 @@
       "hash": "0x8ad112684a0efdb58b08ed16200c1eeab166f92c1104abd0bda0d04dd202a787",
       "transactionType": "CALL",
       "contractName": "TradingTournament",
-      "contractAddress": "0x9DDaf5F1750a310d1a4EACc23A918C8fb3fFDA79",
+      "contractAddress": "0x3284E1a61426b8EF80E7edf7fbf48a3ceE66AA51",
       "function": "addStablecoin(address)",
       "arguments": ["0xbe72E441BF55620febc26715db68d3494213D8Cb"],
       "transaction": {
         "from": "0xd06da0c205e15c6b6dc64f02bcca7e820146dd2c",
-        "to": "0x9DDaf5F1750a310d1a4EACc23A918C8fb3fFDA79",
+        "to": "0x3284E1a61426b8EF80E7edf7fbf48a3ceE66AA51",
         "gas": "0x1773e",
         "value": "0x0",
         "input": "0x0418945a000000000000000000000000be72e441bf55620febc26715db68d3494213d8cb",
@@ -44,7 +44,7 @@
       "cumulativeGasUsed": "0xb4e815",
       "logs": [
         {
-          "address": "0x9DDaf5F1750a310d1a4EACc23A918C8fb3fFDA79",
+          "address": "0x3284E1a61426b8EF80E7edf7fbf48a3ceE66AA51",
           "topics": [
             "0x2f8788117e7eff1d82e926ec794901d17c78024a50270940304540a733656f0d",
             "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
@@ -60,7 +60,7 @@
           "removed": false
         },
         {
-          "address": "0x9DDaf5F1750a310d1a4EACc23A918C8fb3fFDA79",
+          "address": "0x3284E1a61426b8EF80E7edf7fbf48a3ceE66AA51",
           "topics": [
             "0x2f8788117e7eff1d82e926ec794901d17c78024a50270940304540a733656f0d",
             "0x0dff324f61b0a9f17a8a8306493b247c1ac4be64978ea7e693de84bea4a967bd",
@@ -86,14 +86,14 @@
       "effectiveGasPrice": "0x1e4071",
       "from": "0xd06da0c205e15c6b6dc64f02bcca7e820146dd2c",
       "to": null,
-      "contractAddress": "0x9DDaf5F1750a310d1a4EACc23A918C8fb3fFDA79"
+      "contractAddress": "0x3284E1a61426b8EF80E7edf7fbf48a3ceE66AA51"
     },
     {
       "status": "0x1",
       "cumulativeGasUsed": "0x821054",
       "logs": [
         {
-          "address": "0x9DDaf5F1750a310d1a4EACc23A918C8fb3fFDA79",
+          "address": "0x3284E1a61426b8EF80E7edf7fbf48a3ceE66AA51",
           "topics": [
             "0x3db297c09c19972ba6a701ff373ab97e21ff1e4992e863c7abe44e9b2fed0847"
           ],
@@ -115,7 +115,7 @@
       "gasUsed": "0x10fac",
       "effectiveGasPrice": "0x1eddda",
       "from": "0xd06da0c205e15c6b6dc64f02bcca7e820146dd2c",
-      "to": "0x9DDaf5F1750a310d1a4EACc23A918C8fb3fFDA79",
+      "to": "0x3284E1a61426b8EF80E7edf7fbf48a3ceE66AA51",
       "contractAddress": null
     }
   ],
