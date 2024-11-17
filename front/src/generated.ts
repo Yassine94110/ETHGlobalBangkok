@@ -1114,10 +1114,19 @@ export const tradingTournamentAbi = [
       { name: 'maxPlayer', internalType: 'uint256', type: 'uint256' },
       { name: 'startTime', internalType: 'uint256', type: 'uint256' },
       { name: 'endTime', internalType: 'uint256', type: 'uint256' },
-      { name: 'players', internalType: 'address[]', type: 'address[]' },
+      {
+        name: 'players',
+        internalType: 'struct TradingTournament.Player[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'player', internalType: 'address', type: 'address' },
+          { name: 'tradeCount', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
       { name: 'winner', internalType: 'address', type: 'address' },
       { name: 'prizePool', internalType: 'uint256', type: 'uint256' },
       { name: 'winnerClaimed', internalType: 'bool', type: 'bool' },
+      { name: 'stablecoin', internalType: 'address', type: 'address' },
     ],
     stateMutability: 'view',
   },
@@ -1225,6 +1234,7 @@ export const tradingTournamentAbi = [
     type: 'function',
     inputs: [
       { name: '_tournamentId', internalType: 'uint256', type: 'uint256' },
+      { name: '_player', internalType: 'address', type: 'address' },
     ],
     name: 'trackingSwap',
     outputs: [],
