@@ -137,9 +137,9 @@ const CreateTournament = () => {
       address: "0xdE73cABef5c539e21C30fdE81bBd4b52d256cF44",
       args: [
         tournamentName,
-        BigInt(Number(entryFee) * 10 ** 6),
+        BigInt(Number(entryFee) * 10 ** 18),
         BigInt(maxPlayers),
-        BigInt(Number(maxBudget) * 10 ** 6),
+        BigInt(Number(maxBudget) * 10 ** 18),
         BigInt(startDate?.getTime() / 1000),
         BigInt(endDate?.getTime() / 1000),
         token,
